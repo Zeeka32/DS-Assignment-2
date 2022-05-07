@@ -1,6 +1,7 @@
 #include<iostream>
+#include <stack>
 using namespace std;
-
+/*
 template <class T>
 class stack{
 private:
@@ -57,36 +58,24 @@ public:
     bool isEmpty(){ return size == 0; }
 
 };
-
+*/
 string canonPath(string path){
 
-    stack<char> stk; string canonicalPath = "";
-
-    for(int i = 0; i < path.length(); i++){
-        if(path[i] == '/' && stk.isEmpty())
-            stk.push(path[i]);
-
-        else if(path[i] == '.' && path[i + 1] == '.' && !stk.isEmpty()){
+    stack<char> stk;
+    stk.push('/'), path.push_back('/');
+    for(int i = 1; i < path.length(); i++){
+        if (path[i] == '/' && stk.top() != '/')
+            stk.push('/');
+        else if (path[i] == '.' && path[i+1] == '.')
+            stk.pop(), stk.pop(), stk.pop(), stk.pop();
+        else if (path[i] == '.' && path[i+1] != '.')
             stk.pop();
-            continue;
-
-        }else if(path[i] == '.')
-            continue;
-
-        else if(path[i] == '/')
-            continue;
-
-        else if(!stk.isEmpty()){
-            canonicalPath.push_back(stk.pop());
-            canonicalPath.push_back(path[i]);
-        }
         else
-            canonicalPath.push_back(path[i]);
+            stk.push(path[i]);
     }
-
-    if(canonicalPath.empty())
-        canonicalPath.push_back('/');
-
+    string canonicalPath;
+    while (!stk.empty())
+        canonicalPath.push_back(stk.top()), stk.pop();
     return canonicalPath;
 }
 
