@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-//qwq
+
 template <class T>
 class stack{
 private:
