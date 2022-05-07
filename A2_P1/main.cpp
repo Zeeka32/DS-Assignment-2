@@ -34,7 +34,7 @@ public:
         size++;
     }
 
-    T pop() {
+    T pop() const throw (string) {
         if(size == 0)
             throw "Empty stack exception";
 
