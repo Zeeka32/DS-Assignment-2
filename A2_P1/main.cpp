@@ -45,21 +45,14 @@ public:
         return temp;
     }
 
-
 };
 
+string canonPath(stack<char> stk, string path){
+            
+}
+
 int main(void){
-    stack<char> x;
+    
+    
 
-    char y = 'y';
-    char z = 'e';
-    char t = 'h';
-
-    x.push(y);
-    x.push(z);
-    x.push(t);
-
-    while(x.getSize()){
-        cout << x.pop();
-    }
 }
