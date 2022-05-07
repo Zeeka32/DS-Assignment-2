@@ -1,7 +1,6 @@
 #include<iostream>
-#include <stack>
 using namespace std;
-/*
+
 template <class T>
 class stack{
 private:
@@ -35,7 +34,7 @@ public:
         size++;
     }
 
-    T pop() const throw (string) {
+    T pop() throw (string) {
         if(size == 0)
             throw "Empty stack exception";
 
@@ -58,24 +57,36 @@ public:
     bool isEmpty(){ return size == 0; }
 
 };
-*/
+
 string canonPath(string path){
 
-    stack<char> stk;
-    stk.push('/'), path.push_back('/');
-    for(int i = 1; i < path.length(); i++){
-        if (path[i] == '/' && stk.top() != '/')
-            stk.push('/');
-        else if (path[i] == '.' && path[i+1] == '.')
-            stk.pop(), stk.pop(), stk.pop(), stk.pop();
-        else if (path[i] == '.' && path[i+1] != '.')
-            stk.pop();
-        else
+    stack<char> stk; string canonicalPath = "";
+
+    for(int i = 0; i < path.length(); i++){
+        if(path[i] == '/' && stk.isEmpty())
             stk.push(path[i]);
+
+        else if(path[i] == '.' && path[i + 1] == '.' && !stk.isEmpty()){
+            stk.pop();
+            continue;
+
+        }else if(path[i] == '.')
+            continue;
+
+        else if(path[i] == '/')
+            continue;
+
+        else if(!stk.isEmpty()){
+            canonicalPath.push_back(stk.pop());
+            canonicalPath.push_back(path[i]);
+        }
+        else
+            canonicalPath.push_back(path[i]);
     }
-    string canonicalPath;
-    while (!stk.empty())
-        canonicalPath.push_back(stk.top()), stk.pop();
+
+    if(canonicalPath.empty())
+        canonicalPath.push_back('/');
+
     return canonicalPath;
 }
 
@@ -95,12 +106,12 @@ int main(void){
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
     
-    cout << "input path:" << input << "\n";
     input = "/../";
+    cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
-    cout << "input path:" << input << "\n";
     input = "/home//foo/";
+    cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
 }
