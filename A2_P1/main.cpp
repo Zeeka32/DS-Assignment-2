@@ -23,6 +23,7 @@ public:
             temp->value = element;
             head = tail = temp;
             size++;
+            return;
         }
 
         node *temp = new node;
@@ -38,29 +39,79 @@ public:
             throw "Empty stack exception";
 
         T temp = tail->value;
-        tail = tail->previous;
-        delete tail->next;
-        size--;
-        
+        if(size == 1){
+            delete tail;
+            size--;
+        }
+        else{
+            tail = tail->previous;
+            delete tail->next;
+            size--;  
+        }
+
         return temp;
     }
+
+    T top() { return tail->value; }
+
+    bool isEmpty(){ return size == 0; }
 
 };
 
 string canonPath(string path){
 
-    stack<char> stk;
+    stack<char> stk; string canonicalPath = "";
 
-    for(char x : path)
-        cout << x;
+    for(int i = 0; i < path.length(); i++){
+        if(path[i] == '/' && stk.isEmpty())
+            stk.push(path[i]);
 
-    return path;
+        else if(path[i] == '.' && path[i + 1] == '.' && !stk.isEmpty()){
+            stk.pop();
+            continue;
+
+        }else if(path[i] == '.')
+            continue;
+
+        else if(path[i] == '/')
+            continue;
+
+        else if(!stk.isEmpty()){
+            canonicalPath.push_back(stk.pop());
+            canonicalPath.push_back(path[i]);
+        }
+        else
+            canonicalPath.push_back(path[i]);
+    }
+
+    if(canonicalPath.empty())
+        canonicalPath.push_back('/');
+
+    return canonicalPath;
 }
+
+/*this problem is not solved yet. this is only a rough initial 
+  draft based on the current understanding of the unix based style file system
+  so far what i know is all characters are ignored except for "/", ".."
+  where ".." returns to the parent folder.
+  meaning if we have a path: /home/users/zeeka/../downloads/
+  the canonical path should be: /home/users/downloads
+  where downloads is a folder in users.
+  
+  this is not yet implemented.*/
 
 int main(void){
     
-    string input = "hey";
+    string input = "/home/";
+    cout << "input path:" << input << "\n";
+    cout << "canonical path:" << canonPath(input) << "\n\n";
+    
+    cout << "input path:" << input << "\n";
+    input = "/../";
+    cout << "canonical path:" << canonPath(input) << "\n\n";
 
-    canonPath(input);
+    cout << "input path:" << input << "\n";
+    input = "/home//foo/";
+    cout << "canonical path:" << canonPath(input) << "\n\n";
 
 }
