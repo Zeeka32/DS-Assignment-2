@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
-
-template <class T>
+//this is a test comment
+template <class T>//trying with new comment
 class stack{
 private:
     struct node{
