@@ -1,7 +1,6 @@
 #include<iostream>
-#include <stack>
 using namespace std;
-/*
+
 template <class T>
 class stack{
 private:
@@ -35,7 +34,7 @@ public:
         size++;
     }
 
-    T pop() const throw (string) {
+    T pop() throw (string) {
         if(size == 0)
             throw "Empty stack exception";
 
@@ -58,36 +57,43 @@ public:
     bool isEmpty(){ return size == 0; }
 
 };
-*/
+
+
+
+
 string canonPath(string path){
 
-    stack<char> stk;
-    stk.push('/'), path.push_back('/');
+    stack<char> reverse;
+    reverse.push('/'), path.push_back('/');
     for(int i = 1; i < path.length(); i++){
-        if (path[i] == '/' && stk.top() != '/')
-            stk.push('/');
-        else if (path[i] == '.' && path[i+1] == '.')
-            stk.pop(), stk.pop(), stk.pop(), stk.pop();
-        else if (path[i] == '.' && path[i+1] != '.')
-            stk.pop();
+        if (path[i] == '/' && reverse.top() != '/')
+            reverse.push('/');
+        else if (path[i] == '/' && reverse.top() == '/');//ignore
+        
+        else if (path[i] == '.' && path[i+1] == '.'){
+            for (int j = 0; j < 3 && reverse.getSize() > 1; reverse.pop())
+                if (reverse.top() == '/')
+                    j++;
+        }
+        else if (path[i] == '.' && path[i+1] != '.');//ignore
+
         else
-            stk.push(path[i]);
+            reverse.push(path[i]);
     }
+    if (reverse.getSize() > 1)
+        reverse.pop();
+
+    stack<char> original;
+    while (!reverse.isEmpty())
+        original.push(reverse.top()), reverse.pop();
+
     string canonicalPath;
-    while (!stk.empty())
-        canonicalPath.push_back(stk.top()), stk.pop();
+    while (!original.isEmpty())
+        canonicalPath.push_back(original.top()), original.pop();
+
     return canonicalPath;
 }
 
-/*this problem is not solved yet. this is only a rough initial 
-  draft based on the current understanding of the unix based style file system
-  so far what i know is all characters are ignored except for "/", ".."
-  where ".." returns to the parent folder.
-  meaning if we have a path: /home/users/zeeka/../downloads/
-  the canonical path should be: /home/users/downloads
-  where downloads is a folder in users.
-  
-  this is not yet implemented.*/
 
 int main(void){
     
@@ -95,12 +101,20 @@ int main(void){
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
     
-    cout << "input path:" << input << "\n";
     input = "/../";
+    cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
+    input = "/a/../.././../../.";
     cout << "input path:" << input << "\n";
-    input = "/home//foo/";
+    cout << "canonical path:" << canonPath(input) << "\n\n";
+
+    input = "/a/./b/../../c/";
+    cout << "input path:" << input << "\n";
+    cout << "canonical path:" << canonPath(input) << "\n\n";
+
+    input = "/a//b//c//////d";
+    cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
 }
