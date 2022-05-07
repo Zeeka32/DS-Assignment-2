@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-//just leave me alone guahhhhhhh
+//shut the fuck up
 template <class T>
 class stack{
 private:
