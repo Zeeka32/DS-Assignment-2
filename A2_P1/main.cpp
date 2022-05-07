@@ -47,12 +47,20 @@ public:
 
 };
 
-string canonPath(stack<char> stk, string path){
-            
+string canonPath(string path){
+
+    stack<char> stk;
+
+    for(char x : path)
+        cout << x;
+
+    return path;
 }
 
 int main(void){
     
-    
+    string input = "hey";
+
+    canonPath(input);
 
 }
