@@ -40,8 +40,6 @@ double in_order_traverse (TreeNode *node, double &result){
 }
 
 
-
-
 TreeNode *insert (TreeNode *root,const string &exp, int &i)
 {
     if (root == NULL){//insert

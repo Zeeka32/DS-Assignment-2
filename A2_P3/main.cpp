@@ -59,21 +59,13 @@ public:
     }
 
     void pop(){
-        if(q.getSize() == 0)
-            throw string("empty stack exception");
-        else
-            q.dequeue();
+        q.dequeue();
     }
 
     int top() { return q.front(); }
 
-    bool isEmpty (void)//added for testing
-    {
-        if (q.isEmpty())
-            return true;
-        else 
-            return false;
-    }
+    //added for testing
+    bool isEmpty (void) { return q.isEmpty(); }
 
 };
 
@@ -89,7 +81,9 @@ int main(void){
         cout << "stack top :" << x.top() << '\n';
         x.pop();
     }
-    try{x.pop();}
+    try{
+        x.pop();
+    }
     catch (string e){cout << e << endl;}
 
     cout << endl;

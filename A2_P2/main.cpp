@@ -1,5 +1,4 @@
 #include <iostream>
-#include <windows.h>
 
 using namespace std;
 
@@ -23,7 +22,7 @@ public:
         head = tail = NULL;
     }
 
-    void push (T value)
+    void enqueue (T value)
     {
         if (head == NULL){
             head = tail = new Node(value);
@@ -36,7 +35,7 @@ public:
         __size++;
     }
 
-    T pop (void)
+    T dequeue (void)
     {
         if (tail == NULL)
             throw string("underflow");
@@ -79,8 +78,8 @@ int time (queue <int> &que, int k)
     int ticket, time = 0;
     for (int i = 0; true ; i++) {
         ticket = que.front();
-        que.pop();
-        que.push(--ticket);
+        que.dequeue();
+        que.enqueue(--ticket);
         if (ticket >= 0)
             time++;
         if (i == k){
@@ -97,19 +96,19 @@ int main (void)
     cout << "Test 1\n";
     cout << "tickets = [2,3,2], k = 2\n"; 
     queue <int> que; int k = 2;
-    que.push(2);
-    que.push(3);
-    que.push(2);
+    que.enqueue(2);
+    que.enqueue(3);
+    que.enqueue(2);
     cout << "the " << k << "th person has to wait " << time(que, k) << " seconds"<< '\n';
 
 
     cout << "Test 2\n";
     cout << "tickets = [5,1,1,1], k = 0\n"; 
     queue <int> que2;int k2 = 0;
-    que2.push(5);
-    que2.push(1);
-    que2.push(1);
-    que2.push(1);
+    que2.enqueue(5);
+    que2.enqueue(1);
+    que2.enqueue(1);
+    que2.enqueue(1);
     cout << "the " << k2 << "th person has to wait " << time(que2, k2) << " seconds" << '\n';
     return 0;
 }
