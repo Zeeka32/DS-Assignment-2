@@ -76,18 +76,31 @@ string canonPath(string path){
                 if (reverse.top() == '/')
                     j++;
         }
+<<<<<<< Updated upstream
         else if (path[i] == '.' && path[i+1] != '.');//ignore
 
+=======
+        else if (path[i] == '.')//ignore
+            continue;
+>>>>>>> Stashed changes
         else
             reverse.push(path[i]);
     }
     if (reverse.getSize() > 1)
         reverse.pop();
+<<<<<<< Updated upstream
 
     stack<char> original;
     while (!reverse.isEmpty())
         original.push(reverse.top()), reverse.pop();
 
+=======
+
+    stack<char> original;
+    while (!reverse.isEmpty())
+        original.push(reverse.top()), reverse.pop();
+
+>>>>>>> Stashed changes
     string canonicalPath;
     while (!original.isEmpty())
         canonicalPath.push_back(original.top()), original.pop();
