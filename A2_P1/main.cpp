@@ -69,15 +69,15 @@ string canonPath(string path){
     for(int i = 1; i < path.length(); i++){
         if (path[i] == '/' && reverse.top() != '/')
             reverse.push('/');
-        else if (path[i] == '/' && reverse.top() == '/');//ignore
-        
+        else if (path[i] == '/')
+            continue;
         else if (path[i] == '.' && path[i+1] == '.'){
             for (int j = 0; j < 3 && reverse.getSize() > 1; reverse.pop())
                 if (reverse.top() == '/')
                     j++;
         }
-        else if (path[i] == '.' && path[i+1] != '.');//ignore
-
+        else if (path[i] == '.')
+            continue;
         else
             reverse.push(path[i]);
     }
@@ -86,11 +86,11 @@ string canonPath(string path){
 
     stack<char> original;
     while (!reverse.isEmpty())
-        original.push(reverse.top()), reverse.pop();
+        original.push(reverse.pop());
 
     string canonicalPath;
     while (!original.isEmpty())
-        canonicalPath.push_back(original.top()), original.pop();
+        canonicalPath.push_back(original.pop());
 
     return canonicalPath;
 }
