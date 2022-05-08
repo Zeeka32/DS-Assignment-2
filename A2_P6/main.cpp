@@ -1,69 +1,88 @@
 #include <iostream>
 #include <stack>
+#include <cmath>
 using namespace std;
+
 
 struct TreeNode {
     char val;
     TreeNode *left;
     TreeNode *right;
     TreeNode() : val('0'), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+    TreeNode(char x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(char x, TreeNode *left, TreeNode *right) : val(x), left(left),
     right(right) {}
 };
 
-double Expression_Tree(string exp){
-    TreeNode *root = new TreeNode(exp[0]);
-
-    //create expression tree
-    TreeNode *temp = root;
-    for(int i = 1; i < exp.length(); i++){
-        if(i%2 != 0){
-            temp->left = new TreeNode(exp[i]);
+double in_order_traverse (TreeNode *node, double &result){
+    cout << "result is " << result << endl;
+    if (node != NULL){
+        double rhs = in_order_traverse(node->right, result);
+        double lhs = in_order_traverse(node->left, result);
+        if (rhs != 'n' && lhs != 'n'){
+            if (node->val == '^')
+                result = pow(lhs, rhs);
+            else if (node->val == '*')
+                result = lhs * rhs;
+            else if (node->val == '/')
+                result = lhs / rhs;
+            else if (node->val == '+')
+                result = lhs + rhs;
+            else if (node->val == '-')
+                result = lhs - rhs;
+            cout << "calculated " << result  << " by rhs " << rhs << " and lhs " << lhs << " and operator " << node->val << endl;
         }else{
-            temp->right = new TreeNode(exp[i]);
-            temp = temp->right;
+            return node->val - '0';
         }
+        return result;
     }
+    return 'n';
+}
 
+
+
+
+TreeNode *insert (TreeNode *root,const string &exp, int &i)
+{
+    if (root == NULL){//insert
+        while (exp[i] == ' ')
+            i++;
+        root = new TreeNode(exp[i++]);
+    }
+    if (i != exp.length()){
+        if (isdigit(root->val))
+            return root;
+
+        root->left = insert(root->left, exp, i);
+        root->right = insert(root->right, exp, i);
+        
+    }
+    return root;
+}
+
+double Expression_Tree(string exp){
+    TreeNode *root = NULL; int i = 0;
+    root = insert (root, exp, i);
     //Evaluate expression.
     stack<double> stk; double result = 0;
-    for(int i = exp.length() - 1; i >= 0; i--){
-        if(exp[i] != '/' && exp[i] != '*' && exp[i] != '+' && exp[i] != '-')
-            stk.push(exp[i] - '0');
-        else{
-            double num1 = stk.top();
-            stk.pop();
-            double num2 = stk.top();
-            stk.pop();
-            if(exp[i] == '/')
-                result = num1 / num2;
-            else if(exp[i] == '+')
-                result = num1 + num2;
-            else if(exp[i] == '-')
-                result = num1 - num2;
-            else
-                result = num1 * num2;
-                
-            stk.push(result);
-        }
-            
-    }
+    in_order_traverse(root, result);
     return result;
 }
 
+
+
+
+
+/*
+the problem is not over yet since this program only works for 1 digit
+numbers please complete it im tired tracing qwq
+*/
+
+
 int main(void){
-
-    //check for evaluation validness when a minus operator is included.
-    string exp = "+3*4/82";
+    cout << "Test 1\n";
+    string exp = "+3*4/8 2";
     cout << exp << "\n";
-    cout << "Evaluation: " << Expression_Tree(exp) << "\n";
-
-    exp = "*+12+34";
-    cout << exp << "\n";
-    cout << "Evaluation: " << Expression_Tree(exp) << "\n";
-
-    exp = "-3+*4+215";
-    cout << exp << "\n";
-    cout << "Evaluation: " << Expression_Tree(exp) << "\n";
+    cout << "result is " << Expression_Tree(exp);
+    return 0;
 }
