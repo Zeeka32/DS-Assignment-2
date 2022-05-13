@@ -106,6 +106,20 @@ public:
         return sum;
     }
 
+    void clear(Node<T> *x) {
+        if (x == nullptr) return;
+        dfs(x->getLeft());
+        dfs(x->getRight());
+        delete x;
+    }
+
+    void clear() {
+        clear(root);
+    }
+
+    ~BST() {
+        clear();
+    }
 
 };
 
