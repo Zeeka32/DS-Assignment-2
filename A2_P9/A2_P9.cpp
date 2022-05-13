@@ -114,8 +114,8 @@ public:
 
     void clear(Node<T> *x) {
         if (x == nullptr) return;
-        dfs(x->getLeft());
-        dfs(x->getRight());
+        clear(x->getLeft());
+        clear(x->getRight());
         delete x;
     }
 
