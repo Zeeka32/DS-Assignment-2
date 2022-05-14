@@ -15,12 +15,12 @@ struct TreeNode {
 
 class Solution {
 public:
-    void pre_order_traverse (TreeNode *node, stack <int> &stk)
+    void inverse_post_order_traverse (TreeNode *node, stack <int> &stk)
     {
         if (node != NULL){
             stk.push(node->val);
-            pre_order_traverse(node->left, stk);
-            pre_order_traverse(node->right, stk);
+            inverse_post_order_traverse(node->right, stk);
+            inverse_post_order_traverse(node->left, stk);
         }
     }
     void post_order_traverse (TreeNode *node, stack <int> &stk)
@@ -37,7 +37,7 @@ public:
             return true;
         stack <int> right;
         stack <int> left;
-        pre_order_traverse(root->right, left);
+        inverse_post_order_traverse(root->right, left);
         post_order_traverse(root->left, right);
         while (!right.empty() && !left.empty() && left.top() == right.top() )
             right.pop(), left.pop();
