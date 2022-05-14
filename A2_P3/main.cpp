@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-template <class T>//template
 class queue{
 private:
     struct node{
@@ -42,10 +41,9 @@ public:
     bool isEmpty() { return size == 0; }
 };
 
-template <class T>
 class stack{
 private:
-    queue<T> q;
+    queue q;
 public:
 
     void push(int element){
@@ -65,7 +63,6 @@ public:
 
     int top() { return q.front(); }
 
-    //added for testing
     bool isEmpty (void) { return q.isEmpty(); }
 
 };
@@ -73,7 +70,7 @@ public:
 int main(void){
     //providing main
     cout << "test 1\n";
-    stack <int> x;
+    stack x;
     x.push(1);
     x.push(2);
     x.push(3);
@@ -82,12 +79,8 @@ int main(void){
         cout << "stack top :" << x.top() << '\n';
         x.pop();
     }
-    try{
-        x.pop();
-    }
-    catch (string e){cout << e << endl;}
 
-    cout << endl;
+    cout << "\n";
 
     cout << "test 2\n";
     x.push(8);

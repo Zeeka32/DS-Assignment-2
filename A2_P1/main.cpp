@@ -55,47 +55,50 @@ public:
 
     T top() { return tail->value; }
 
-    bool isEmpty(){ return size == 0; }
+    bool empty(){ return size == 0; }
 
 };
 
+string canon_path(string path){
 
+    //adding to path so path is it meets if conditions, pushing first top
+    stack<char> stk; stk.push('/');
 
-
-string canonPath(string path){
-
-    stack<char> reverse;
-    reverse.push('/'), path.push_back('/'), path.push_back('/');//adding to path so path is it meets if conditions, pushing first top
-    for(int i = 1; i < path.length(); i++){
-        if (path[i] == '/' && reverse.top() != '/')// case you get / and stack top not /
-            reverse.push('/');
+    for(int i = 1; i < path.length(); i++)
+    
+        if (path[i] == '/' && stk.top() != '/')// case you get / and stack top not /
+            stk.push('/');
 
         else if (path[i] == '/')
-            continue;//ignore
+            continue;
 
-        else if (path[i] == '.' && path[i+1] == '.' && path[i+2] == '/' && reverse.top() == '/'){//encounter ".."
-            if (reverse.getSize() > 1)
-                reverse.pop();
-            while (reverse.top() != '/')
-                reverse.pop();
+        //handling /.. command
+        else if (path[i] == '.' && path[i+1] == '.' && path[i+2] == '/' && stk.top() == '/'){
+            if (stk.getSize() > 1)
+                stk.pop();
+            while (stk.top() != '/')
+                stk.pop();
         }
-        else if (path[i] == '.' && path[i+1] == '/' && reverse.top() == '/')
-            continue;//ignore we will handle top later
+
+        //if it is a single dot we ignore it.
+        else if (path[i] == '.' && path[i+1] == '/' && stk.top() == '/')
+            continue;
         else
-            reverse.push(path[i]);
-    }
-    if (reverse.getSize() > 1)//pop top slash
-        reverse.pop();
+            stk.push(path[i]);
 
-    //reverse
-    stack<char> original;
-    while (!reverse.isEmpty())
-        original.push(reverse.pop());
+    //remove slash from end of the stack.
+    if (stk.getSize() > 1)
+        stk.pop();
 
-    //making result
+    //reverse the stack to put it into the string.
+    stack<char> reverseStk;
+    while (!stk.empty())
+        reverseStk.push(stk.pop());
+
+    //putting the final answer into the string and returning the answer.
     string canonicalPath;
-    while (!original.isEmpty())
-        canonicalPath.push_back(original.pop());
+    while (!reverseStk.empty())
+        canonicalPath.push_back(reverseStk.pop());
 
     return canonicalPath;
 }
@@ -105,32 +108,27 @@ int main(void){
     //"/home"
     string input = "/home/";
     cout << "input path:" << input << "\n";
-    cout << "canonical path:" << canonPath(input) << "\n\n";
+    cout << "canonical path:" << canon_path(input) << "\n\n";
 
     //"/"
     input = "/../";
     cout << "input path:" << input << "\n";
-    cout << "canonical path:" << canonPath(input) << "\n\n";
+    cout << "canonical path:" << canon_path(input) << "\n\n";
 
     //"/"
     input = "/a/../.././../../.";
     cout << "input path:" << input << "\n";
-    cout << "canonical path:" << canonPath(input) << "\n\n";
+    cout << "canonical path:" << canon_path(input) << "\n\n";
 
     //"/c"
     input = "/a/./b/../../c/";
     cout << "input path:" << input << "\n";
-    cout << "canonical path:" << canonPath(input) << "\n\n";
+    cout << "canonical path:" << canon_path(input) << "\n\n";
 
-    //"/a/b/c/d"
-    input = "/a//b//c//////d";
+    // Expected Result /...
+    input = "/.../";
     cout << "input path:" << input << "\n";
-    cout << "canonical path:" << canonPath(input) << "\n\n";
-
-    //"/a/b/c/d"
-    input = "/..///../a/b/c/.//..//d///..";
-    cout << "input path:" << input << "\n";
-    cout << "canonical path:" << canonPath(input) << "\n\n";
+    cout << "canonical path:" << canon_path(input) << "\n\n";
 
     return 0;
 }
