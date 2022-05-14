@@ -45,7 +45,7 @@ public:
 template <class T>
 class stack{
 private:
-    queue  <T> q;
+    queue<T> q;
 public:
 
     void push(int element){
@@ -56,6 +56,7 @@ public:
 
         while(tempSize--)
             q.enqueue(q.front()), q.dequeue();
+            
     }
 
     void pop(){

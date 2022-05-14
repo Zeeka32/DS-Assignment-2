@@ -39,9 +39,8 @@ void in_order_traverse (TreeNode *node, vector<int> &dfs)
 int find_Kth_Smallest_Sum(TreeNode *node, int k) {
     int sum = 0;
     vector<int> dfs;
-
     in_order_traverse(node, dfs);
-    for(int i = 0; i < k; i++)
+    for(int i = 0; dfs[i] <= dfs[k - 1]; i++)
         sum+= dfs[i];
 
     return sum;

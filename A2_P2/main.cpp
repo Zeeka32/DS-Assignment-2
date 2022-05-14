@@ -94,12 +94,12 @@ int time (queue <int> &que, int k)
 int main (void)
 {
     cout << "Test 1\n";
-    cout << "tickets = [2,3,2], k = 2\n"; 
+    cout << "tickets = [2,3,2], k = 2\n";
     queue <int> que; int k = 2;
     que.enqueue(2);
     que.enqueue(3);
     que.enqueue(2);
-    cout << "the " << k << "th person has to wait " << time(que, k) << " seconds"<< '\n';
+    cout << "the person in positon " << k << " has to wait " << time(que, k) << " seconds"<< '\n';
 
 
     cout << "Test 2\n";
@@ -109,6 +109,6 @@ int main (void)
     que2.enqueue(1);
     que2.enqueue(1);
     que2.enqueue(1);
-    cout << "the " << k2 << "th person has to wait " << time(que2, k2) << " seconds" << '\n';
+    cout << "the person in positon " << k2 << " has to wait " << time(que2, k2) << " seconds" << '\n';
     return 0;
 }
