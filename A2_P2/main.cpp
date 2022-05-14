@@ -22,6 +22,17 @@ public:
         head = tail = NULL;
     }
 
+    queue (const queue &rhs)
+    {
+        head = tail = NULL;
+        Node *cur = rhs.head;
+        while (cur != rhs.tail){
+            enqueue(cur->value);
+            cur = cur->next;
+        }
+        enqueue(cur->value);
+    }
+
     void enqueue (T value)
     {
         if (head == NULL){
@@ -39,7 +50,7 @@ public:
     {
         if (tail == NULL)
             throw string("underflow");
-        
+
         Node *tmp = head;
         head = head->next;
         if (head == NULL)
@@ -71,12 +82,20 @@ public:
     {
         return __size;
     }
+
+    void clear (void)
+    {
+        while (!empty())
+            dequeue();
+    }
+
+
 };
 
-int time (queue <int> &que, int k)
+int time (queue <int> que, int k)
 {
     int ticket, time = 0;
-    for (int i = 0; true ; i++) {
+    for (int i = 0; i <= k ; i++) {
         ticket = que.front();
         que.dequeue();
         que.enqueue(--ticket);
@@ -86,29 +105,51 @@ int time (queue <int> &que, int k)
             i = 0;
             k = que.size();
             if (ticket == 0)
-            return time;
+                return time;
         }
     }
+}
+
+template <class T>
+void tester (int array[], int size, queue <T> &que)
+{
+    for (int i = 0; i < size; i++)
+        que.enqueue(array[i]);
 }
 
 int main (void)
 {
     cout << "Test 1\n";
     cout << "tickets = [2,3,2], k = 2\n";
-    queue <int> que; int k = 2;
-    que.enqueue(2);
-    que.enqueue(3);
-    que.enqueue(2);
-    cout << "the person in positon " << k << " has to wait " << time(que, k) << " seconds"<< '\n';
-
+    queue <int> que; int k = 2;int array[] = {2,3,2};
+    tester<int>(array, 3, que);
+    cout << "the " << k << "th person has to wait " << time(que, k) << " seconds"<< '\n';
+    cout << '\n';
+    que.clear();
 
     cout << "Test 2\n";
-    cout << "tickets = [5,1,1,1], k = 0\n"; 
-    queue <int> que2;int k2 = 0;
-    que2.enqueue(5);
-    que2.enqueue(1);
-    que2.enqueue(1);
-    que2.enqueue(1);
-    cout << "the person in positon " << k2 << " has to wait " << time(que2, k2) << " seconds" << '\n';
+    cout << "tickets = [5,1,1,1], k = 0\n";
+    k = 0; int array2[] = {5,1,1,1};
+    tester<int>(array2, 4, que);
+    cout << "the " << k << "th person has to wait " << time(que, k) << " seconds" << '\n';
+    cout << '\n';
+    que.clear();
+
+    cout << "Test 3\n";
+    cout << "tickets = [3,8,1,2,2] k = 4\n";
+    k = 4;int array3[] = {3,8,1,2,2};
+    tester<int>(array3, 5, que);
+    cout << "the " << k << "th person has to wait " << time(que, k) << " seconds" << '\n';
+    cout << '\n';
+    que.clear();
+
+    cout << "Test 4\n";
+    cout << "tickets = [3,8,1,2,2,5,7,5,3] k = 6\n";
+    k = 6;int array4[] = {3,8,1,2,2,5,7,5,3};
+    tester<int>(array4, 9, que);
+    cout << "the " << k << "th person has to wait " << time(que, k) << " seconds" << '\n';
+    cout << '\n';
+    que.clear();
+
     return 0;
 }
