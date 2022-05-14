@@ -5,50 +5,54 @@ using namespace std;
 
 
 struct TreeNode {
-    char val;
+    string val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode() : val('0'), left(nullptr), right(nullptr) {}
-    TreeNode(char x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(char x, TreeNode *left, TreeNode *right) : val(x), left(left),
+    TreeNode() : val("0"), left(nullptr), right(nullptr) {}
+    TreeNode(string x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(string x, TreeNode *left, TreeNode *right) : val(x), left(left),
     right(right) {}
 };
 
 double in_order_traverse (TreeNode *node, double &result){
-    cout << "result is " << result << endl;
     if (node != NULL){
         double rhs = in_order_traverse(node->right, result);
         double lhs = in_order_traverse(node->left, result);
-        if (rhs != 'n' && lhs != 'n'){
-            if (node->val == '^')
+        if (node->left != NULL && node->right != NULL){
+            if (node->val == "^")
                 result = pow(lhs, rhs);
-            else if (node->val == '*')
+            else if (node->val == "*")
                 result = lhs * rhs;
-            else if (node->val == '/')
+            else if (node->val == "/")
                 result = lhs / rhs;
-            else if (node->val == '+')
+            else if (node->val == "+")
                 result = lhs + rhs;
-            else if (node->val == '-')
+            else if (node->val == "-")
                 result = lhs - rhs;
-            cout << "calculated " << result  << " by rhs " << rhs << " and lhs " << lhs << " and operator " << node->val << endl;
         }else{
-            return node->val - '0';
+            return stoi(node->val);
         }
         return result;
     }
-    return 'n';
+    return 0.0;
 }
 
 
-TreeNode *insert (TreeNode *root,const string &exp, int &i)
+TreeNode *insert (TreeNode *root,const string &exp, int &i)//"+3*4/8 2"
 {
     if (root == NULL){//insert
         while (exp[i] == ' ')
             i++;
-        root = new TreeNode(exp[i++]);
+        string node;
+        while (isdigit(exp[i]))
+            node.push_back(exp[i++]);
+        if (node.size() == 0)
+            node.push_back(exp[i++]);
+
+        root = new TreeNode(node);
     }
-    if (i != exp.length()){
-        if (isdigit(root->val))
+    if (i < exp.length()){
+        if (isdigit(root->val[0]))
             return root;
 
         root->left = insert(root->left, exp, i);
@@ -62,25 +66,21 @@ double Expression_Tree(string exp){
     TreeNode *root = NULL; int i = 0;
     root = insert (root, exp, i);
     //Evaluate expression.
-    stack<double> stk; double result = 0;
+    double result = 0;
     in_order_traverse(root, result);
     return result;
 }
 
 
-
-
-
-/*
-the problem is not over yet since this program only works for 1 digit
-numbers please complete it im tired tracing qwq
-*/
-
-
 int main(void){
     cout << "Test 1\n";
-    string exp = "+3*4/8 2";
+    string exp = "+3*  40  /8 2";
+    cout << exp << "\n"; 
+    cout << "result is " << Expression_Tree(exp) << '\n' << '\n';
+
+    cout << "Test 2\n";
+    exp = "/+ 1 2 - 3 4";
     cout << exp << "\n";
-    cout << "result is " << Expression_Tree(exp);
+    cout << "result is " << Expression_Tree(exp) << '\n' << '\n';
     return 0;
 }
