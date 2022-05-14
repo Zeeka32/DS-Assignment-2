@@ -35,7 +35,7 @@ public:
         size++;
     }
 
-    T pop() throw (string) {
+    T pop() {
         if(size == 0)
             throw "Empty stack exception";
 
