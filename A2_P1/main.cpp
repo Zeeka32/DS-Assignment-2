@@ -72,11 +72,11 @@ string canonPath(string path){
         else if (path[i] == '/')
             continue;
         else if (path[i] == '.' && path[i+1] == '.'){
-            for (int j = 0; j < 3 && reverse.getSize() > 1; reverse.pop())
+            for (int j = 0; j < 2 && reverse.getSize() > 1; reverse.pop())
                 if (reverse.top() == '/')
                     j++;
         }
-        else if (path[i] == '.')
+        else if (path[i] == '.' && path[i + 1] == '/')
             continue;
         else
             reverse.push(path[i]);
