@@ -47,7 +47,7 @@ public:
         else{
             tail = tail->previous;
             delete tail->next;
-            size--;  
+            size--;
         }
 
         return temp;
@@ -65,29 +65,34 @@ public:
 string canonPath(string path){
 
     stack<char> reverse;
-    reverse.push('/'), path.push_back('/');
+    reverse.push('/'), path.push_back('/'), path.push_back('/');//adding to path so path is it meets if conditions, pushing first top
     for(int i = 1; i < path.length(); i++){
-        if (path[i] == '/' && reverse.top() != '/')
+        if (path[i] == '/' && reverse.top() != '/')// case you get / and stack top not /
             reverse.push('/');
+
         else if (path[i] == '/')
-            continue;
-        else if (path[i] == '.' && path[i+1] == '.'){
-            for (int j = 0; j < 2 && reverse.getSize() > 1; reverse.pop())
-                if (reverse.top() == '/')
-                    j++;
+            continue;//ignore
+
+        else if (path[i] == '.' && path[i+1] == '.' && path[i+2] == '/' && reverse.top() == '/'){//encounter ".."
+            if (reverse.getSize() > 1)
+                reverse.pop();
+            while (reverse.top() != '/')
+                reverse.pop();
         }
-        else if (path[i] == '.' && path[i + 1] == '/')
-            continue;
+        else if (path[i] == '.' && path[i+1] == '/' && reverse.top() == '/')
+            continue;//ignore we will handle top later
         else
             reverse.push(path[i]);
     }
-    if (reverse.getSize() > 1)
+    if (reverse.getSize() > 1)//pop top slash
         reverse.pop();
 
+    //reverse
     stack<char> original;
     while (!reverse.isEmpty())
         original.push(reverse.pop());
 
+    //making result
     string canonicalPath;
     while (!original.isEmpty())
         canonicalPath.push_back(original.pop());
@@ -97,25 +102,35 @@ string canonPath(string path){
 
 
 int main(void){
-    
+    //"/home"
     string input = "/home/";
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
-    
+
+    //"/"
     input = "/../";
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
+    //"/"
     input = "/a/../.././../../.";
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
+    //"/c"
     input = "/a/./b/../../c/";
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
+    //"/a/b/c/d"
     input = "/a//b//c//////d";
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canonPath(input) << "\n\n";
 
+    //"/a/b/c/d"
+    input = "/..///../a/b/c/.//..//d///..";
+    cout << "input path:" << input << "\n";
+    cout << "canonical path:" << canonPath(input) << "\n\n";
+
+    return 0;
 }
