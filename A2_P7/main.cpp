@@ -9,6 +9,7 @@ struct Node  {
     Node *right = NULL;
     T value;
     Node (T value) {this->value = value;}
+    ~Node () {right = left = NULL;}
 };
 
 template <class T>
@@ -30,28 +31,40 @@ void breadth_first_traversal (Node <T> *node)
         nodes.push(node);
         while(!nodes.empty()){
             Node <T>* placeholder = nodes.front();
-            cout << '(' << placeholder->value << ')' << '\t';
-            if(placeholder->left != NULL) {
+            if (placeholder != NULL){
+                cout << '(' << placeholder->value << ')' << '\t';
                 nodes.push(placeholder->left);
-            }
-            if(placeholder->right != NULL) {
                 nodes.push(placeholder->right);
             }
+            else
+                cout << "(NULL)\t";
             nodes.pop();
         }
+    }else{
+        cout << "(NULL)";
+    }
+}// this printer is not good help!
+
+template <class T>
+void free (Node <T> *root)
+{
+    if (root != NULL){
+        free(root->left);
+        free(root->right);
+        delete root;
+        root = NULL;
     }
 }
-
 
 int main (void)
 {
     Node <int> *root = new Node <int> (5);
-    Node <int> *lv1_right = new Node <int> (1);
-    Node <int> *lv1_left = new Node <int> (2);
-    Node <int> *lv2_right1 = new Node <int> (8);
-    Node <int> *lv2_left1 = new Node <int> (10);
-    Node <int> *lv2_right2 = new Node <int> (88);
-    Node <int> *lv2_left2 = new Node <int> (12);
+    root->right = new Node <int> (1);
+    root->left = new Node <int> (2);
+    root->left->right = new Node <int> (8);
+    root->left->left = new Node <int> (10);
+    root->right->right = new Node <int> (88);
+    root->right->left = new Node <int> (12);
 
     /*
           5
@@ -62,15 +75,11 @@ int main (void)
      10 8  12 88
     */
     cout << "Test1\n";
-    root->right = lv1_right;
-    root->left = lv1_left;
-    lv1_left->right = lv2_right1;
-    lv1_left->left = lv2_left1;
-    lv1_right->left = lv2_left2;
-    lv1_right->right = lv2_right2;
+    
     flip<int>(root);
     breadth_first_traversal(root);
-    cout << '\n';
+    free<int>(root);
+    cout << '\n' << '\n';
 
     /*
           5
@@ -81,11 +90,77 @@ int main (void)
               88
     */
     cout << "Test2\n";
-    lv1_left->left = NULL;
-    lv1_right->right = lv1_right->left = NULL;
+    root = new Node <int> (5);
+    root->left = new Node <int> (1);
+    root->right = new Node <int> (2);
+    root->right->right = new Node <int> (88);
     flip<int>(root);
     breadth_first_traversal(root);
-    cout << '\n';
+    free<int>(root);
+    cout << '\n' << '\n';
 
+    /*
+             1
+            / \
+           /   \
+          2     3
+         / \  
+        4   5   
+    */
+    cout << "Test3\n";
+    root = new Node <int> (1);
+    root->left = new Node <int> (2);
+    root->right = new Node <int> (3);
+    root->left->left = new Node <int> (4);
+    root->left->right = new Node <int> (5);
+    flip<int>(root);
+    breadth_first_traversal(root);
+    free<int>(root);
+    cout << '\n' << '\n';
+
+    /*
+             1
+            / \
+           /   \
+          2     3
+         / \  
+        4   5
+           /
+          10
+    */
+    cout << "Test4\n";
+    root = new Node <int> (1);
+    root->left = new Node <int> (2);
+    root->right = new Node <int> (3);
+    root->left->left = new Node <int> (4);
+    root->left->right = new Node <int> (5);
+    root->left->right->left = new Node <int> (10);
+    flip<int>(root);
+    breadth_first_traversal(root);
+    free<int>(root);
+    cout << '\n' << '\n';
+
+    /*
+             1
+            / \
+           /   \
+          2     3
+         / \     \
+        4   5     9
+           /
+          10
+    */
+    cout << "Test5\n";
+    root = new Node <int> (1);
+    root->left = new Node <int> (2);
+    root->right = new Node <int> (3);
+    root->right->right = new Node <int> (9);
+    root->left->left = new Node <int> (4);
+    root->left->right = new Node <int> (5);
+    root->left->right->left = new Node <int> (10);
+    flip<int>(root);
+    breadth_first_traversal(root);
+    free<int>(root);
+    cout << '\n' << '\n';
     return 0;
 }
