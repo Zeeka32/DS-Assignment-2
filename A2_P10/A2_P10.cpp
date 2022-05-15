@@ -40,15 +40,27 @@ int find_Kth_Smallest_Sum(TreeNode *node, int k) {
     int sum = 0;
     vector<int> dfs;
     in_order_traverse(node, dfs);
-    for(int i = 0; dfs[i] <= dfs[k - 1]; i++)
+    for(int i = 0; dfs[i] <= dfs[k - 1] && i < dfs.size(); i++)
         sum+= dfs[i];
 
     return sum;
 }
 
 int main (void) {
+    int k;
 
-    int k; cin >> k;
+    /*
+                 54
+                / \
+               /   \
+              /     \
+            51       75
+           / \      / \    
+          /   \    /   \
+         49    52 74    85
+    */
+    cout << "Test 1\n" << "Kth >> ";
+    cin >> k;
     TreeNode *root = new TreeNode(54);
     insert(root, 51);
     insert(root, 49);
@@ -56,24 +68,65 @@ int main (void) {
     insert(root, 75);
     insert(root, 74);
     insert(root, 85);
-    cout << find_Kth_Smallest_Sum(root, k) << "\n";
+    cout << find_Kth_Smallest_Sum(root, k) << "\n\n";
+    
 
+    /*
+                 8
+                / \
+               /   \
+              /     \
+            1        9
+             \          
+              \    
+               3
+                \
+                 7  
+    */
+    cout << "Test 2\n" << "Kth >> ";
     cin >> k;
     TreeNode *root1 = new TreeNode(8);
     insert(root1 ,1);
     insert(root1 ,9);
     insert(root1 ,3);
     insert(root1 ,7);
-    cout << find_Kth_Smallest_Sum(root1, k) << '\n';
+    cout << find_Kth_Smallest_Sum(root1, k) << "\n\n";
 
+    /*
+            1
+             \
+              2
+               \
+                3
+                 \
+                  4
+                   \
+                    5
+    */
+    cout << "Test 3\n" << "Kth >> ";
     cin >> k;
     TreeNode *root2 = new TreeNode(1);
     insert(root2 ,2);
     insert(root2 ,3);
     insert(root2 ,4);
     insert(root2 ,5);
-    cout << find_Kth_Smallest_Sum(root2, k) << '\n';
+    cout << find_Kth_Smallest_Sum(root2, k) << "\n\n";
 
+
+    /*
+                   6
+                  /
+                 5
+                /
+               4
+              /
+             3
+            /
+           2
+          /
+         1      
+    */
+    cout << "Test 4\n" << "Kth >> ";
     cin >> k;
     TreeNode *root3 = new TreeNode(6);
     insert(root3 ,5);
@@ -81,9 +134,23 @@ int main (void) {
     insert(root3 ,3);
     insert(root3 ,2);
     insert(root3 ,1);
-    cout << find_Kth_Smallest_Sum(root3, k) << '\n';
+    cout << find_Kth_Smallest_Sum(root3, k) << "\n\n";
 
 
+    /*
+                   5
+                  /
+                 5
+                /
+               5
+              /
+             5
+            /
+           5
+          /
+         5
+    */
+    cout << "Test 5\n" << "Kth >> ";
     cin >> k;
     TreeNode *root4 = new TreeNode(5);
     insert(root4 ,5);
@@ -91,7 +158,7 @@ int main (void) {
     insert(root4 ,5);
     insert(root4 ,5);
     insert(root4 ,5);
-    cout << find_Kth_Smallest_Sum(root4, k) << '\n';
+    cout << find_Kth_Smallest_Sum(root4, k) << "\n\n";
 
 
     return 0;
