@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <cmath>
+#include <iomanip>
 using namespace std;
 
 
@@ -20,7 +21,7 @@ double in_order_traverse (TreeNode *node, double &result){
         double lhs = in_order_traverse(node->left, result);
         if (node->left != NULL && node->right != NULL){
             if (node->val == "^")
-                result = pow(lhs, rhs);
+                result = pow(lhs, rhs);// -+ ^3  11  /4  18 * 5  200
             else if (node->val == "*")
                 result = lhs * rhs;
             else if (node->val == "/")
@@ -82,5 +83,22 @@ int main(void){
     exp = "/+ 1 2 - 3 4";
     cout << exp << "\n";
     cout << "result is " << Expression_Tree(exp) << '\n' << '\n';
+
+    cout << "Test 3\n";
+    exp = " - * + - 8 1 3 6 * + 3 7 2";
+    cout << exp << "\n";
+    cout << "result is " << Expression_Tree(exp) << '\n' << '\n';
+
+    cout << "Test 4\n";
+    exp = "+/*4  2 3^ 7 2";
+    cout << exp << "\n";
+    cout << "result is " << fixed << setprecision(3) << Expression_Tree(exp) << '\n' << '\n';
+    
+    cout << "Test 5\n";
+    exp = "-+ ^3  11  /4  18 * 5  200 ";
+    cout << exp << "\n";
+    cout << "result is " << fixed << setprecision(3) << Expression_Tree(exp) << '\n' << '\n';
+
+
     return 0;
 }
