@@ -15,10 +15,10 @@ struct TreeNode {
     right(right) {}
 };
 
-double in_order_traverse (TreeNode *node, double &result){
+double post_order_traverse (TreeNode *node, double &result){
     if (node != NULL){
-        double rhs = in_order_traverse(node->right, result);
-        double lhs = in_order_traverse(node->left, result);
+        double rhs = post_order_traverse(node->right, result);
+        double lhs = post_order_traverse(node->left, result);
         if (node->left != NULL && node->right != NULL){
             if (node->val == "^")
                 result = pow(lhs, rhs);// -+ ^3  11  /4  18 * 5  200
@@ -39,28 +39,28 @@ double in_order_traverse (TreeNode *node, double &result){
 }
 
 
-TreeNode *insert (TreeNode *root,const string &exp, int &i)//"+3*4/8 2"
+TreeNode *insert (TreeNode *node,const string &exp, int &i)//"+3*4/8 2"
 {
-    if (root == NULL){//insert
+    if (node == NULL){//insert
         while (exp[i] == ' ')
             i++;
-        string node;
+        string strNumberN;
         while (isdigit(exp[i]))
-            node.push_back(exp[i++]);
-        if (node.size() == 0)
-            node.push_back(exp[i++]);
+            strNumberN.push_back(exp[i++]);
+        if (strNumberN.size() == 0)
+            strNumberN.push_back(exp[i++]);
 
-        root = new TreeNode(node);
+        node = new TreeNode(strNumberN);
     }
     if (i < exp.length()){
-        if (isdigit(root->val[0]))
-            return root;
+        if (isdigit(node->val[0]))
+            return node;
 
-        root->left = insert(root->left, exp, i);
-        root->right = insert(root->right, exp, i);
+        node->left = insert(node->left, exp, i);
+        node->right = insert(node->right, exp, i);
         
     }
-    return root;
+    return node;
 }
 
 double Expression_Tree(string exp){
@@ -68,7 +68,7 @@ double Expression_Tree(string exp){
     root = insert (root, exp, i);
     //Evaluate expression.
     double result = 0;
-    in_order_traverse(root, result);
+    post_order_traverse(root, result);
     return result;
 }
 
