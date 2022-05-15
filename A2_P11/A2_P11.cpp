@@ -136,13 +136,15 @@ public:
 
     bool printRange(BSTNode<T> *x, T l, T r, bool f) {
         if (x == nullptr) return f;
-        f |= printRange(x->getLeft(), l, r, f);
+        if (l < x->getVal())
+            f |= printRange(x->getLeft(), l, r, f);
         if (l <= x->getVal() && x->getVal() <= r) {
             if (f) cout << ", ";
             f = true;
             cout << x->getVal();
         }
-        f |= printRange(x->getRight(), l, r, f);
+        if (x->getVal() < r)
+            f |= printRange(x->getRight(), l, r, f);
         return f;
     }
 
