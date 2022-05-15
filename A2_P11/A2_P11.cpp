@@ -58,6 +58,11 @@ class BSTFCI {
 private:
     BSTNode<T> *root;
     int sz;
+
+    bool isBalance(BSTNode<T> *t) {
+        return calculate_height(root, nullptr, true);
+    }
+
 public:
 
     BSTFCI() { root = nullptr, sz = 0; }
@@ -123,15 +128,17 @@ public:
         if (x == nullptr) return ans;
         ans &= calculate_height(x->getRight(), x, ans);
         ans &= calculate_height(x->getLeft(), x, ans);
+        if ((x->getRight() == nullptr || x->getLeft() == nullptr) && (x->getHeight() > 1)) return false;
         if (prev != nullptr) {
-            if (abs(prev->getHeight() - (x->getHeight() + 1)) > 1 && prev->getHeight() != 0) return false;
+            if ((abs(prev->getHeight() - (x->getHeight() + 1)) > 1 && prev->getHeight() != 0)) return false;
             prev->setHeight(max(prev->getHeight(), x->getHeight() + 1));
         }
         return ans;
     }
 
-    bool isBalance(BSTFCI *t) {
-        return calculate_height(root, nullptr, true);
+
+    bool isBalance() {
+        return isBalance(root);
     }
 
     bool printRange(BSTNode<T> *x, T l, T r, bool f) {
@@ -191,9 +198,9 @@ int main() {
      *   20  40 60  80
     */
 
-//    cout << bst1.isBalance(&bst1) << '\n'; // true
-    bst1.printRange(30, 70);
-    cout << '\n';
+//    cout << bst1.isBalance() << '\n'; // true
+//    bst1.printRange(30, 70);
+//    cout << '\n';
 
     /*  test 1
      *
@@ -207,9 +214,9 @@ int main() {
     bst2.insert(20);
     bst2.insert(40);
 
-//    cout << bst2.isBalance(&bst2) << '\n'; // true
-//    cout << bst1.isSubTree(&bst1, &bst2) << '\n'; // true
-    bst2.printRange(21, 39);
+//    cout << bst2.isBalance() << '\n'; // true
+    cout << bst1.isSubTree(&bst1, &bst2) << '\n'; // true
+//    bst2.printRange(21, 39);
     cout << '\n';
 
     /*  test 2
@@ -229,9 +236,9 @@ int main() {
     bst3.insert(4);
     bst3.insert(5);
 
-//    cout << bst3.isBalance(&bst3) << '\n'; // true
-//    cout << bst1.isSubTree(&bst1, &bst3) << '\n'; // false
-    bst3.printRange(1, 3);
+//    cout << bst3.isBalance() << '\n'; // true
+    cout << bst1.isSubTree(&bst1, &bst3) << '\n'; // false
+//    bst3.printRange(1, 3);
     cout << '\n';
 
     /*     test 3
@@ -244,9 +251,9 @@ int main() {
     bst4.insert(70);
     bst4.insert(60);
 
-//    cout << bst4.isBalance(&bst4) << '\n'; // true
-//    cout << bst1.isSubTree(&bst1, &bst4) << '\n'; // true
-    bst4.printRange(1, 3);
+//    cout << bst4.isBalance() << '\n'; // true
+    cout << bst1.isSubTree(&bst1, &bst4) << '\n'; // true
+//    bst4.printRange(1, 3);
     cout << '\n';
 
     /*     test 4
@@ -256,9 +263,9 @@ int main() {
 
     bst5.insert(50);
 
-//    cout << bst5.isBalance(&bst5) << '\n'; // true
-//    cout << bst1.isSubTree(&bst1, &bst5) << '\n'; // true
-    bst5.printRange(50, 50);
+//    cout << bst5.isBalance() << '\n'; // true
+    cout << bst1.isSubTree(&bst1, &bst5) << '\n'; // true
+//    bst5.printRange(50, 50);
     cout << '\n';
 
     /*     test 5
@@ -275,9 +282,9 @@ int main() {
     bst6.insert(20);
     bst6.insert(40);
 
-//    cout << bst6.isBalance(&bst6) << '\n'; // true
-//    cout << bst1.isSubTree(&bst1, &bst6) << '\n'; // true
-    bst6.printRange(20, 35);
+//    cout << bst6.isBalance() << '\n'; // true
+    cout << bst1.isSubTree(&bst1, &bst6) << '\n'; // true
+//    bst6.printRange(20, 35);
     cout << '\n';
 
     return 0;
