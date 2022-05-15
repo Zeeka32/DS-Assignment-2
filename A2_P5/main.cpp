@@ -96,8 +96,8 @@ int main (void) {
     root->right = new TreeNode(3);
 
     root2 = new TreeNode(1);
-    root->right = new TreeNode(2);
-    root->right->right = new TreeNode(3);
+    root2->right = new TreeNode(2);
+    root2->right->right = new TreeNode(3);
 
     solve(root, root2);
 
