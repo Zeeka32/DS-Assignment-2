@@ -62,7 +62,7 @@ public:
 string canon_path(string path){
 
     //adding to path so path is it meets if conditions, pushing first top
-    stack<char> stk; stk.push('/');
+    stack<char> stk; stk.push('/'), path.push_back('/');
 
     for(int i = 1; i < path.length(); i++)
     

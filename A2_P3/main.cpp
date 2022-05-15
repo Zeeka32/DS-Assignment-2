@@ -12,7 +12,7 @@ private:
 public:
 
     void enqueue(int element){
-        if(size == 0){
+        if(isEmpty()){
             node *temp = new node;
             temp->value = element;
             head = tail = temp;
@@ -28,6 +28,8 @@ public:
     }
 
     void dequeue(){
+        if (isEmpty())
+            throw string("underflow");
         node *temp = head;
         head = head->next;
         size--;
@@ -58,7 +60,11 @@ public:
     }
 
     void pop(){
-        q.dequeue();
+        try{
+            q.dequeue();
+        }catch(string e){
+            throw e;
+        }
     }
 
     int top() { return q.front(); }
@@ -91,4 +97,11 @@ int main(void){
         cout << "stack top :" << x.top() << '\n';
         x.pop();
     }
+    try {
+        x.pop();
+    }catch(string e){
+        cout << e << endl;
+    }
+
+    return 0;
 }
