@@ -59,8 +59,16 @@ private:
     BSTNode<T> *root;
     int sz;
 
-    bool isBalance(BSTNode<T> *t) {
-        return calculate_height(root, nullptr, true);
+    bool calculate_height(BSTNode<T> *x, BSTNode<T> *prev, bool ans) {
+        if (x == nullptr) return ans;
+        ans &= calculate_height(x->getRight(), x, ans);
+        ans &= calculate_height(x->getLeft(), x, ans);
+        if ((x->getRight() == nullptr || x->getLeft() == nullptr) && (x->getHeight() > 1)) return false;
+        if (prev != nullptr) {
+            if ((abs(prev->getHeight() - (x->getHeight() + 1)) > 1 && prev->getHeight() != 0)) return false;
+            prev->setHeight(max(prev->getHeight(), x->getHeight() + 1));
+        }
+        return ans;
     }
 
 public:
@@ -72,16 +80,6 @@ public:
     bool empty() { return root == nullptr; }
 
     BSTNode<T> *getRoot() { return root; }
-
-    T find(const T x) {
-        BSTNode<T> *p = root;
-        while (p != nullptr) {
-            if (x == p->getVal())
-                return p->getVal();
-            (x < p->getVal()) ? p = p->getLeft() : p = p->getRight();
-        }
-        return -1000000000;
-    }
 
     void insert(T x) {
         sz++;
@@ -124,21 +122,8 @@ public:
         return false;
     }
 
-    bool calculate_height(BSTNode<T> *x, BSTNode<T> *prev, bool ans) {
-        if (x == nullptr) return ans;
-        ans &= calculate_height(x->getRight(), x, ans);
-        ans &= calculate_height(x->getLeft(), x, ans);
-        if ((x->getRight() == nullptr || x->getLeft() == nullptr) && (x->getHeight() > 1)) return false;
-        if (prev != nullptr) {
-            if ((abs(prev->getHeight() - (x->getHeight() + 1)) > 1 && prev->getHeight() != 0)) return false;
-            prev->setHeight(max(prev->getHeight(), x->getHeight() + 1));
-        }
-        return ans;
-    }
-
-
     bool isBalance() {
-        return isBalance(root);
+        return calculate_height(root, nullptr, true);
     }
 
     bool printRange(BSTNode<T> *x, T l, T r, bool f) {
