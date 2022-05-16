@@ -64,6 +64,8 @@ void printPostOrder(string preOrder, string inOrder){
 int main (void)
 {
 
+    /*
+    */
     //test case1
     string preOrder = "ABFGC", inOrder = "FBGAC";
     cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
@@ -71,11 +73,74 @@ int main (void)
     printPostOrder(preOrder, inOrder);
     cout << "\n\n";
 
+    /*
+                 n
+                / \
+               /   \
+              s     e
+             / \   /
+            H  u  i
+    */
     //test case2
+    preOrder = "nsHuei", inOrder = "Hsunie";
+    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
+    cout << "Post Order: ";
+    printPostOrder(preOrder, inOrder);
+    cout << "\n\n";
+
+    /*
+    */
+    //test case3
     preOrder = "ABDHECFGI", inOrder = "DHBEAFCGI";
     cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
     cout << "Post Order: ";
     printPostOrder(preOrder, inOrder);
     cout << "\n\n";
+
+    /*
+                  a
+                 / \
+                /   \
+               /     \
+              /       \
+             /         \
+            /           \
+           I             f
+          / \           / \
+         /   \         /   \
+        /     \       /     \  
+       U       S     2       t   
+      / \           / \     / \
+     1   H         E   N   /   \
+                          r     s
+                         / \     \
+                        A   m     u
+                                   \
+                                    M
+                                     \
+                                      3
+    */
+    //test case4
+    preOrder = "aIU1HSf2ENtrAmsuM3", inOrder = "1UHISaE2NfArmtsuM3";
+    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
+    cout << "Post Order: ";
+    printPostOrder(preOrder, inOrder);
+    cout << "\n\n";
+
+    /*
+                 S
+                / \
+               /   \
+              A     K
+             / \     \ 
+            T  H      N       
+    */
+    //test case5
+    preOrder = "SATHKN", inOrder = "TAHSKN";
+    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
+    cout << "Post Order: ";
+    printPostOrder(preOrder, inOrder);
+    cout << "\n\n";
+    
     return 0;
 }
