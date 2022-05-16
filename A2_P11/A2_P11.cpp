@@ -96,30 +96,43 @@ public:
         }
     }
 
-    void dfs(BSTNode<T> *x, vector<int> &v) {
-        if (x == nullptr) return;
-        v.push_back(x->getVal());
-        dfs(x->getLeft(), v);
-        dfs(x->getRight(), v);
+    bool isSameTree(BSTNode<T> *p, BSTNode<T> *q){
+
+        if(p != NULL && q != NULL){
+            if(p->getVal() == q->getVal()){
+
+                if(!isSameTree(p->getLeft(), q->getLeft()))
+                    return false;
+
+                if(!isSameTree(p->getRight(), q->getRight()))
+                    return false;
+
+            }else return false;
+
+        }else if(p == NULL && q == NULL)
+            return true;
+        else 
+            return false;
+
+        return true;
+    }
+
+    bool isSubTreeSolver(BSTNode<T> *tree1, BSTNode<T> *tree2){
+
+        if(isSameTree(tree1, tree2))
+            return true;
+
+        if(tree1 != nullptr && isSubTreeSolver(tree1->getLeft(), tree2))
+            return true;
+
+        if(tree1 != nullptr && isSubTreeSolver(tree1->getRight(), tree2))
+            return true;
+
+        return false;
     }
 
     bool isSubTree(BSTFCI *t1, BSTFCI *t2) {
-        vector<T> v, s;
-        dfs(t1->getRoot(), v);
-        s = v;
-        v.clear();
-        dfs(t2->getRoot(), v);
-        // search for v in s...
-        if ((int) s.size() < (int) v.size()) return false;
-
-        for (int i = 0; i < (int) s.size() - (int) v.size(); ++i) {
-            int k = 0;
-            for (int j = 0; j < v.size(); ++j) {
-                if (s[i + j] == v[j]) k++;
-            }
-            if (k == (int) v.size()) return true;
-        }
-        return false;
+        return isSubTreeSolver(t1->getRoot(), t2->getRoot());
     }
 
     bool isBalance() {
