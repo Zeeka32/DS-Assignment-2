@@ -60,14 +60,20 @@ private:
     int sz;
 
     bool calculate_height(BSTNode<T> *x, BSTNode<T> *prev, bool ans) {
+
         if (x == nullptr) return ans;
+
         ans &= calculate_height(x->getRight(), x, ans);
         ans &= calculate_height(x->getLeft(), x, ans);
+
         if ((x->getRight() == nullptr || x->getLeft() == nullptr) && (x->getHeight() > 1)) return false;
+
         if (prev != nullptr) {
             if ((abs(prev->getHeight() - (x->getHeight() + 1)) > 1 && prev->getHeight() != 0)) return false;
+            
             prev->setHeight(max(prev->getHeight(), x->getHeight() + 1));
         }
+
         return ans;
     }
 
@@ -86,12 +92,16 @@ public:
         if (empty())
             root = new BSTNode<T>(x);
         else {
+
             BSTNode<T> *p = root, *prev, *temp = new BSTNode<T>(x);
+
             while (p != nullptr) {
                 prev = p;
                 (x < p->getVal()) ? p = p->getLeft() : p = p->getRight();
             }
+
             (x < prev->getVal()) ? prev->setLeft(temp) : prev->setRight(temp);
+
             temp->setParent(prev);
         }
     }
@@ -140,32 +150,37 @@ public:
     }
 
     bool printRange(BSTNode<T> *x, T l, T r, bool f) {
+
         if (x == nullptr) return f;
+
         if (l < x->getVal())
             f |= printRange(x->getLeft(), l, r, f);
+
         if (l <= x->getVal() && x->getVal() <= r) {
             if (f) cout << ", ";
             f = true;
             cout << x->getVal();
         }
+
         if (x->getVal() < r)
             f |= printRange(x->getRight(), l, r, f);
+            
         return f;
     }
 
-    void printRange(T l, T r) {
+    void printRange(T left, T right) {
         cout << '[';
-        printRange(root, l, r, false);
+        printRange(root, left, right, false);
         cout << ']';
     }
 
     void clear(BSTNode<T> *x) {
-        if (x == nullptr) return;
-        clear(x->getLeft());
-        clear(x->getRight());
-        delete x;
+        if (x != nullptr){
+            clear(x->getLeft());
+            clear(x->getRight());
+            delete x;
+        }
     }
-
 
     void clear() {
         clear(root);
