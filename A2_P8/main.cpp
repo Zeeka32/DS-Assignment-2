@@ -61,86 +61,86 @@ void printPostOrder(string preOrder, string inOrder){
 
 }
 
+void solve(string preOrder, string inOrder){
+    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
+    cout << "Post Order: ";
+    printPostOrder(preOrder, inOrder);
+    cout << "\n\n";
+}
+
 int main (void)
 {
 
-    /*
+    /* Tree 1
+    |       A
+    |      / \
+    |     B   C
+    |    / \
+    |   F   G
     */
-    //test case1
     string preOrder = "ABFGC", inOrder = "FBGAC";
-    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
-    cout << "Post Order: ";
-    printPostOrder(preOrder, inOrder);
-    cout << "\n\n";
+    solve(preOrder, inOrder);
 
-    /*
-                 n
-                / \
-               /   \
-              s     e
-             / \   /
-            H  u  i
+    /* Tree 2
+    |        N
+    |       / \
+    |      /   \
+    |     S     E
+    |    / \   /
+    |   H  U  I
     */
-    //test case2
-    preOrder = "nsHuei", inOrder = "Hsunie";
-    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
-    cout << "Post Order: ";
-    printPostOrder(preOrder, inOrder);
-    cout << "\n\n";
+    preOrder = "NSHUEI", inOrder = "HSUNIE";
+    solve(preOrder, inOrder);
 
-    /*
+    /* Tree 3
+    |        A
+    |       / \
+    |      /   \
+    |     B     C
+    |    / \   / \
+    |   D   E F   G
+    |    \         \
+    |     H         I
+    |  
     */
-    //test case3
     preOrder = "ABDHECFGI", inOrder = "DHBEAFCGI";
-    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
-    cout << "Post Order: ";
-    printPostOrder(preOrder, inOrder);
-    cout << "\n\n";
+    solve(preOrder, inOrder);
 
-    /*
-                  a
-                 / \
-                /   \
-               /     \
-              /       \
-             /         \
-            /           \
-           I             f
-          / \           / \
-         /   \         /   \
-        /     \       /     \  
-       U       S     2       t   
-      / \           / \     / \
-     1   H         E   N   /   \
-                          r     s
-                         / \     \
-                        A   m     u
-                                   \
-                                    M
-                                     \
-                                      3
+    /* Tree 4
+    |              a
+    |             / \
+    |            /   \
+    |           /     \
+    |          /       \
+    |         /         \
+    |        /           \
+    |       I             f
+    |      / \           / \
+    |     /   \         /   \
+    |    /     \       /     \  
+    |   U       S     2       t   
+    |  / \           / \     / \
+    | 1   H         E   N   /   \
+    |                      r     s
+    |                     / \     \
+    |                    A   m     u
+    |                               \
+    |                                M
+    |                                 \
+    |                                  3
     */
-    //test case4
     preOrder = "aIU1HSf2ENtrAmsuM3", inOrder = "1UHISaE2NfArmtsuM3";
-    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
-    cout << "Post Order: ";
-    printPostOrder(preOrder, inOrder);
-    cout << "\n\n";
+    solve(preOrder, inOrder);
 
-    /*
-                 S
-                / \
-               /   \
-              A     K
-             / \     \ 
-            T  H      N       
+    /* Tree 5
+    |        S
+    |       / \
+    |      A   K
+    |     / \   \ 
+    |    T   H   N       
     */
-    //test case5
     preOrder = "SATHKN", inOrder = "TAHSKN";
-    cout << "PreOrder: " << preOrder << " InOrder: " << inOrder << "\n";
-    cout << "Post Order: ";
-    printPostOrder(preOrder, inOrder);
-    cout << "\n\n";
+    solve(preOrder, inOrder);
     
     return 0;
 }

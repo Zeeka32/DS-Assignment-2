@@ -193,112 +193,155 @@ public:
 };
 
 int main() {
+    //creating trees for test cases
     BSTFCI<int> bst1(50), bst2, bst3, bst4, bst5, bst6;
-    bst1.insert(70);
-    bst1.insert(60);
-    bst1.insert(80);
-    bst1.insert(30);
-    bst1.insert(20);
-    bst1.insert(40);
+    bst1.insert(70); bst1.insert(60);
+    bst1.insert(80); bst1.insert(30);
+    bst1.insert(20); bst1.insert(40);
+    bst2.insert(30); bst2.insert(20);
+    bst2.insert(40); bst3.insert(2);
+    bst3.insert(1);  bst3.insert(3);
+    bst3.insert(4);  bst3.insert(5);
+    bst4.insert(70); bst4.insert(60);
+    bst5.insert(50); bst6.insert(50);
+    bst6.insert(30); bst6.insert(20);
+    bst6.insert(40);
 
 
-    /*     main BST...
-     *
-     *        50
-     *      /    \
-     *     30     70
-     *    /  \   /  \
-     *   20  40 60  80
+    /* main BST... BST1
+    *
+    *        50
+    *      /    \
+    *     30     70
+    *    /  \   /  \
+    *   20  40 60  80
     */
 
-//    cout << bst1.isBalance() << '\n'; // true
-//    bst1.printRange(30, 70);
-//    cout << '\n';
-
-    /*  test 1
-     *
-     *         30
-     *       /    \
-     *      20    40
-     */
+    if(bst1.isBalance())
+        cout << "The tree is balanced" << "\n\n";
+    else 
+        cout << "the tree is not balanced" << "\n\n";
 
 
-    bst2.insert(30);
-    bst2.insert(20);
-    bst2.insert(40);
+    cout << "The range of numbers in BST1 from 30 to 70 is:\n";
+    bst1.printRange(30, 70);
+    cout << "\n\n";
 
-//    cout << bst2.isBalance() << '\n'; // true
-    cout << bst1.isSubTree(&bst1, &bst2) << '\n'; // true
-//    bst2.printRange(21, 39);
-    cout << '\n';
+    /*------------------------------------------------------------------*/
+    /*       BST2
+    *         30
+    *       /    \
+    *      20    40
+    */
 
-    /*  test 2
-     *
-     *           2
-     *          /  \
-     *         1    3
-     *               \
-     *                4
-     *                 \
-     *                  5
-     */
+    if(bst2.isBalance())
+        cout << "The tree is balanced\n\n";
+    else 
+        cout << "the tree is not balanced\n\n";
 
-    bst3.insert(2);
-    bst3.insert(1);
-    bst3.insert(3);
-    bst3.insert(4);
-    bst3.insert(5);
 
-//    cout << bst3.isBalance() << '\n'; // true
-    cout << bst1.isSubTree(&bst1, &bst3) << '\n'; // false
-//    bst3.printRange(1, 3);
-    cout << '\n';
+    if(bst1.isSubTree(&bst1, &bst2))
+        cout << "the entered tree is a subtree of the original tree\n\n";
+    else
+        cout << "the entered tree is not a subtree of the orignal tree\n\n";
 
-    /*     test 3
-     *
-     *        70
-     *       /
-     *     60
-     */
 
-    bst4.insert(70);
-    bst4.insert(60);
+    cout << "The range of numbers in BST2 from 21 to 39 is:\n";
+    bst2.printRange(21, 39);
+    cout << "\n\n";
 
-//    cout << bst4.isBalance() << '\n'; // true
-    cout << bst1.isSubTree(&bst1, &bst4) << '\n'; // true
-//    bst4.printRange(1, 3);
-    cout << '\n';
+    /*------------------------------------------------------------------*/
+    /*         BST3
+    *
+    *           2
+    *          /  \
+    *         1    3
+    *               \
+    *                4
+    *                 \
+    *                  5
+    */
 
-    /*     test 4
-     *
-     *       50
-     */
+    if(bst3.isBalance())
+        cout << "The tree is balanced\n\n";
+    else 
+        cout << "the tree is not balanced\n\n";
 
-    bst5.insert(50);
+    if(bst1.isSubTree(&bst1, &bst3))
+        cout << "the entered tree is a subtree of the original tree\n\n";
+    else
+        cout << "the entered tree is not a subtree of the orignal tree\n\n";
+    
+    cout << "The range of numbers in BST3 from 1 to 3 is:\n";
+    bst3.printRange(1, 3);
+    cout << "\n\n";
 
-//    cout << bst5.isBalance() << '\n'; // true
-    cout << bst1.isSubTree(&bst1, &bst5) << '\n'; // true
-//    bst5.printRange(50, 50);
-    cout << '\n';
+    /*------------------------------------------------------------------*/
+    /*      BST4
+    *        70
+    *       /
+    *     60
+    */
 
-    /*     test 5
-     *
+    if(bst4.isBalance())
+        cout << "The tree is balanced\n\n";
+    else 
+        cout << "the tree is not balanced\n\n";
+
+
+    if(bst1.isSubTree(&bst1, &bst4))
+        cout << "the entered tree is a subtree of the original tree\n\n";
+    else
+        cout << "the entered tree is not a subtree of the orignal tree\n\n";
+    
+
+    cout << "The range of numbers in BST4 from 1 to 3 is:\n";
+    bst4.printRange(1, 3);
+    cout << "\n\n";
+
+    /*------------------------------------------------------------------*/
+    /*      BST5
+    *        50
+    */
+
+    if(bst5.isBalance())
+        cout << "The tree is balanced\n\n";
+    else 
+        cout << "the tree is not balanced\n\n";
+
+
+    if(bst1.isSubTree(&bst1, &bst5))
+        cout << "the entered tree is a subtree of the original tree\n\n";
+    else
+        cout << "the entered tree is not a subtree of the orignal tree\n\n";
+
+    cout << "The range of numbers in BST5 from 50 to 50 is:\n";
+    bst5.printRange(50, 50);
+    cout << "\n\n";
+
+    /*------------------------------------------------------------------*/
+    /*     BST6
      *      50
      *      /
      *     30
      *    /  \
      *   20  40
      */
+    
 
-    bst6.insert(50);
-    bst6.insert(30);
-    bst6.insert(20);
-    bst6.insert(40);
+    if(bst6.isBalance())
+        cout << "The tree is balanced\n\n";
+    else 
+        cout << "the tree is not balanced\n\n";
 
-//    cout << bst6.isBalance() << '\n'; // true
-    cout << bst1.isSubTree(&bst1, &bst6) << '\n'; // true
-//    bst6.printRange(20, 35);
-    cout << '\n';
+    if(bst1.isSubTree(&bst1, &bst6))
+        cout << "the entered tree is a subtree of the original tree\n\n";
+    else
+        cout << "the entered tree is not a subtree of the orignal tree\n\n";
+    
+    cout << "The range of numbers in BST6 from 20 to 35 is:\n";
+    bst6.printRange(20, 35);
+    cout << "\n\n";
 
     return 0;
 }
