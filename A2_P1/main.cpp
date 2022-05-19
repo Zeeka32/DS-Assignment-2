@@ -115,8 +115,8 @@ int main(void){
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canon_path(input) << "\n\n";
 
-    //"/"
-    input = "/a/../.././../../.";
+    //"/home/foo"
+    input = "/home//foo/";
     cout << "input path:" << input << "\n";
     cout << "canonical path:" << canon_path(input) << "\n\n";
 
