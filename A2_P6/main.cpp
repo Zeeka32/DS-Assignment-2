@@ -75,7 +75,7 @@ double Expression_Tree(string exp){
 
 int main(void){
     cout << "Test 1\n";
-    string exp = "+3*  40  /8 2";
+    string exp = "+3*  4  /8 2";
     cout << exp << "\n"; 
     cout << "result is " << Expression_Tree(exp) << '\n' << '\n';
 

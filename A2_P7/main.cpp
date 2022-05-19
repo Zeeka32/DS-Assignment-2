@@ -53,7 +53,7 @@ int main(void) {
       / \   / \
      10 8  12 88
     */
-    cout << "Test 1\nThe postorder of the reversed tree is: ";
+    cout << "Test 1\nThe post order of the reversed tree is: ";
 
     flip<int>(root);
     free<int>(root);
